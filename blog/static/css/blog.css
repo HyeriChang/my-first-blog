@@ -1,0 +1,22 @@
+* {
+    font-family: 'Prata', serif;
+}
+h1 a, h2 a  {
+    color: #98382A;
+}
+body {
+    /*padding-left: 35px;*/
+    background: linear-gradient(141deg,  #90D4C1 0%,  #90D4C1 51%,  #90D4C1 75%);
+}
+.page-header {
+    background-color: #D490A3;
+    margin-top: 0;
+    padding: 25px 25px 50px 45px;
+}
+.content {
+    margin-left: 40px;
+}
+.date {
+    color: #4B5523;
+}
+
