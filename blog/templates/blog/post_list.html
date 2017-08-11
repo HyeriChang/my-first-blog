@@ -1,6 +1,6 @@
 {%  extends 'blog/base.html' %}
 {% load staticfiles %}
-
+{% load post %}
 
 {% block content %}
     {% for post in posts %}
@@ -8,8 +8,8 @@
             <div class="date">
                 {{ post.published_date }}
             </div>
-            <h1><a href={% url 'post_detail' pk=post.id %}>{{ post.title }}</a></h1>
-            <p>{{ post.text| markdown_html| safe | linebreaksbr }}</p>
+            <h1><a href={% url 'post_detail' pk=post.id %}>{{ post.title  | markdown_html| safe }}</a></h1>
+            <p>{{ post.text| markdown_html| safe }}</p>
         </div>
     {% endfor %}
 {% endblock %}
