@@ -12,5 +12,22 @@
         {% endif %}
         <h1>{{ post.title | markdown_html | safe }}</h1>
         {{ post.text| markdown_html | safe }}
+
+        {% for comment in comments %}
+            <div class="comment">
+            <div class="date">{{  comment.created_date  }}<div>
+                {{ comment.title  }}
+                 {{ comment.text  }}
+            </div>
+            {% empty %}
+                <p>No comments here yet :)) </p>
+        {% endfor %}
+
+    <form action="." method="POST">
+        {% csrf_token %}
+          {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
     </div>
+
 {% endblock %}

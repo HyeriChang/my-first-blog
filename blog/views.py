@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 
 def post_list(request):
@@ -11,11 +11,19 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    comments = Comment.objects.filter(post=post)
+    form = CommentForm()
+    # import pdb; pdb.set_trace()
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
 
-def post_new(request):
-    form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+    return render(request, 'blog/post_detail.html', {'post': post, 'form': form, 'comments': comments})
+
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -26,8 +34,10 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            #saving the form
             return redirect('post_detail', pk=post.pk)
     else:
+        #construct the postform with data from the form
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
@@ -44,3 +54,7 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+
+

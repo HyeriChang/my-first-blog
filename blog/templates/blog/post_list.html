@@ -10,6 +10,8 @@
             </div>
             <h1><a href={% url 'post_detail' pk=post.id %}>{{ post.title  | markdown_html| safe }}</a></h1>
             <p>{{ post.text| markdown_html| safe }}</p>
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+
         </div>
     {% endfor %}
 {% endblock %}
